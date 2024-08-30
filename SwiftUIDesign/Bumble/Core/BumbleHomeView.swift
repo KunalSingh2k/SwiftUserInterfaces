@@ -7,9 +7,11 @@
 
 import SwiftUI
 import SwiftfulUI
+import SwiftfulRouting
 
 struct BumbleHomeView: View {
-    
+    // Variables
+    @Environment(\.router) var router
     @State private var filters: [String] = ["Everyone", "Trending"]
     @State private var allUsers: [User] = []
     @State private var selectedIndex: Int = 0
@@ -17,6 +19,7 @@ struct BumbleHomeView: View {
     @State private var currentSwipeOffset: CGFloat = 0
     @AppStorage("bumble_home_filter") private var selectedFilter = "Everyone"
     
+    //MARK: - Body of Bumble Home View
     var body: some View {
         ZStack {
             Color.bumbleWhite.ignoresSafeArea()
@@ -26,8 +29,6 @@ struct BumbleHomeView: View {
                 
                 BumbleFilterView(options: filters, selection: $selectedFilter)
                     .background(Divider(), alignment: .bottom)
-                
-                //BumbleCardView()
                 
                 ZStack {
                     if !allUsers.isEmpty {
@@ -73,14 +74,14 @@ struct BumbleHomeView: View {
                     .padding(8)
                     .background(.black.opacity(0.001))
                     .onTapGesture {
-                        
+                        router.dismissScreen()
                     }
                 
                 Image(systemName: "arrow.uturn.left")
                     .padding(8)
                     .background(.black.opacity(0.001))
                     .onTapGesture {
-                        
+                        router.dismissScreen()
                     }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -90,11 +91,13 @@ struct BumbleHomeView: View {
                 .foregroundStyle(.bumbleYellow)
                 .frame(maxWidth: .infinity, alignment: .center)
             
-            Image(systemName: "slider.horizontal.3")
+            Image(systemName: "ellipsis.message.fill")
                 .padding(8)
                 .background(.black.opacity(0.001))
                 .onTapGesture {
-                    
+                    router.showScreen(.push) { _ in
+                        BumbleChatView()
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
         }
@@ -174,7 +177,9 @@ struct BumbleHomeView: View {
 }
 
 #Preview {
-    BumbleHomeView()
+    RouterView { _ in
+        BumbleHomeView()
+    }
 }
 
 
