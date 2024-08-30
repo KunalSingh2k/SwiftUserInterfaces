@@ -85,9 +85,7 @@ struct BumbleCardView: View {
                 }
                 
                 BumbleHeartView()
-                    .onTapGesture {
-                        
-                    }
+                    .onTapGesture { }
             }
             .padding(24)
             .font(.callout)
