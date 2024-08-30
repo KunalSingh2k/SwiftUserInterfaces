@@ -21,6 +21,7 @@ struct BumbleChatView: View {
                 headerView
                     .padding(16)
                 matchQueueSection
+                    .padding(.vertical, 16)
                 chatsSection
                 Spacer()
             }
